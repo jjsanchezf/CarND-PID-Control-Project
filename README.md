@@ -29,10 +29,10 @@ A PID controller consist of three steps.
 `error(t) = r(t) - y(t)`
 
 2. Update the controller gain to minimise the plant error by calculating the three contorller modules, Proportional, Integral and Differential parameters.
- * **Proportional (P)** acts on the present values error and adjust its final contribution based on the *Kp* hyperparameter.
+ * **Proportional (P)** acts on the present error of the plant and adjust its final contribution based on the *Kp* hyperparameter. When using just this controler it leads to a "Steady-State Error"
  ` P = Kp * error(t) `
 
- * **Integral (I)** acts on the summation of all the past and present values error and adjust its final contribution based on the *Ki* parameter. This attempts to minimise drift and model offsets. For example, if the current output has a slight offset, the integral of the error will accumulate over time, and the controller will respond by applying a stronger action towards the setpoint.
+ * **Integral (I)** acts on the summation of all the past and present values error and adjust its final contribution based on the *Ki* parameter, helping to correct the "Steady-State Error".
  ` I = Ki * sum(error(t) + error(t-1) + error(t-2) + ...)`
 
  * **Differential (D)** accounts for possible future trends of the error, based on its current rate of change and adjust its final contribution based on the *Kd* parameter. For example, when the controller gain is large, the control output will reduce the rate of change in the gain, effectively dampening the system. The derivative is negative when the error is positive, reducing the size of the *I* and *P* gains and the greater the difference between the current and previous errors, the more the D module reduces the strength of the action to prevent overshooting.
